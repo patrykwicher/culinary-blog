@@ -9,9 +9,17 @@
             <h2>peas <span id="ampersand">&</span> loaf</h2>
           </router-link>
         </div>
-        <div class="login-register-container">
-          <p @click="toggleLogin()">Login</p>
-          <p @click="toggleRegistration()">Register</p>
+        <div class="login-register-user-logout-container">
+          <div class="if-user-logged" v-if="!getUserProfile.nickname">
+            <p @click="toggleLogin()">Login</p>
+            <p @click="toggleRegistration()">Register</p>
+          </div>
+          <div class="if-user-logged" v-else>
+            <router-link to="/user-panel" class="links">
+              <p> {{ getUserProfile.nickname }}</p>
+            </router-link>
+            <p @click="logout()"> logout </p>
+          </div>
         </div>
       </div>
       <nav>
@@ -47,6 +55,14 @@ export default {
     },
     toggleRegistration() {
       this.$store.commit('toggleRegistration');
+    },
+    logout() {
+      this.$store.dispatch('logout')
+    }
+  },
+  computed: {
+    getUserProfile() {
+      return this.$store.state.userProfile;
     }
   }
 }
@@ -102,21 +118,27 @@ $hover-color: #53800A;
                 }
             }
         }
-        .login-register-container {
+        .login-register-user-logout-container {
             display: flex;
-            :first-child {
-                margin-right: 1em;
-            }
 
-            p {
-                font-family: 'Work Sans', sans-serif;
-                cursor: pointer;
-                margin-top: 0;
-                color: $ampersand-color;
-                font-size: 0.9em;
+            .if-user-logged {
+                display: flex;
 
-                &:hover {
-                    color: $hover-color;
+                :first-child {
+                  margin-right: 2em;
+                  text-decoration: none;
+                }
+
+                p {
+                    font-family: 'Work Sans', sans-serif;
+                    cursor: pointer;
+                    margin-top: 0;
+                    color: $ampersand-color;
+                    font-size: 0.9em;
+
+                    &:hover {
+                        color: $hover-color;
+                    }
                 }
             }
         }
@@ -128,16 +150,16 @@ $hover-color: #53800A;
         border-left: none;
 
         .links-container {
-          padding: 0.7em 0;
-          margin: 0 8em 0 8em;
-          display: flex;
-          justify-content: space-evenly;
+            padding: 0.7em 0;
+            margin: 0 8em;
+            display: flex;
+            justify-content: space-evenly;
 
-          .links {
-              text-decoration: none;
-              color: $font-color;
-              font-size: 0.8em;
-          }
+            .links {
+                text-decoration: none;
+                color: $font-color;
+                font-size: 0.8em;
+            }
         }
     }
 }

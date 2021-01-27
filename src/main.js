@@ -7,7 +7,12 @@ import '@/assets/css-files/scss-config.scss'
 
 let app;
 auth.onAuthStateChanged(user => {
-    console.log(user);
+  if (!app) {
     app = createApp(App);
     app.use(store).use(router).mount('#app');
+  }
+
+  if (user) {
+    store.dispatch('fetchUserData', user);
+  }
 })

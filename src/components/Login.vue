@@ -19,6 +19,9 @@
       </form>
     </div>
   </div>
+  <div class="logged-user">
+
+  </div>
 </template>
 
 <script>
