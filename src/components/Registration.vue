@@ -15,7 +15,7 @@
         </div>
         <div class="input-container">
           <label for="password">PASSWORD: </label>
-          <input v-model.trim="signupForm.password" id="password" type="password" name="password" placeholder="6 characters min.">
+          <input v-model.trim="signupForm.password" @keyup.enter="signUp()" id="password" type="password" name="password" placeholder="6 characters min.">
         </div>
         <div class="button-container">
           <button @click="signUp()" class="button" type="button" name="button">Register</button>

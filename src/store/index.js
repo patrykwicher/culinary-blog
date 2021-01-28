@@ -76,6 +76,18 @@ export default createStore({
       } catch(err) {
         console.log(err.message);
       }
+    },
+
+    async createPost(context, post) {
+      try {
+        await firebase.recipesCollection.add({
+          date: new Date(),
+          userId: firebase.auth.currentUser.uid,
+          post: post.content
+        });
+      } catch(err) {
+        console.log(err.message);
+      }
     }
   },
   modules: {

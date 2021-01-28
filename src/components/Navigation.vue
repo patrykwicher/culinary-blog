@@ -18,7 +18,7 @@
             <router-link to="/user-panel" class="links">
               <p> {{ getUserProfile.nickname }}</p>
             </router-link>
-            <p @click="logout()"> logout </p>
+            <p @click="logout()">Logout</p>
           </div>
         </div>
       </div>
@@ -118,6 +118,7 @@ $hover-color: #53800A;
                 }
             }
         }
+
         .login-register-user-logout-container {
             display: flex;
 
@@ -134,7 +135,7 @@ $hover-color: #53800A;
                     cursor: pointer;
                     margin-top: 0;
                     color: $ampersand-color;
-                    font-size: 0.9em;
+                    font-size: 1em;
 
                     &:hover {
                         color: $hover-color;
