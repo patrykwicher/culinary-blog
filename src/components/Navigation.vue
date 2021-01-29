@@ -10,13 +10,13 @@
           </router-link>
         </div>
         <div class="login-register-user-logout-container">
-          <div class="if-user-logged" v-if="!getUserProfile.nickname">
+          <div class="if-user-logged" v-if="!getUsersProfile.nickname">
             <p @click="toggleLogin()">Login</p>
             <p @click="toggleRegistration()">Register</p>
           </div>
           <div class="if-user-logged" v-else>
             <router-link to="/user-panel" class="links">
-              <p> {{ getUserProfile.nickname }}</p>
+              <p> {{ getUsersProfile.nickname }}</p>
             </router-link>
             <p @click="logout()">Logout</p>
           </div>
@@ -61,8 +61,8 @@ export default {
     }
   },
   computed: {
-    getUserProfile() {
-      return this.$store.state.userProfile;
+    getUsersProfile() {
+      return this.$store.state.usersProfile;
     }
   }
 }

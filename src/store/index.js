@@ -1,11 +1,14 @@
 import { createStore } from 'vuex'
 import * as firebase from '../firebase'
+import router from '@/router/index'
+import fb from 'firebase/app'
 
 export default createStore({
   state: {
     toggleLogin: false,
     toggleRegistration: false,
-    userProfile: {}
+    usersProfile: {},
+    usersPosts: [],
   },
   mutations: {
     toggleLogin(state) {
@@ -14,17 +17,18 @@ export default createStore({
       }
       state.toggleLogin = !state.toggleLogin;
     },
-
     toggleRegistration(state) {
       if(!state.toggleRegistration) {
         state.toggleLogin = false;
       }
       state.toggleRegistration = !state.toggleRegistration;
     },
-
-    setUserProfile(state, userData) {
-      state.userProfile = userData;
-    }
+    setUsersProfile(state, userData) {
+      state.usersProfile = userData;
+    },
+    fetchUsersPosts(state, usersPostsArray) {
+      state.usersPosts = usersPostsArray;
+    },
   },
   actions: {
     async signUp(context, signupForm) {
@@ -34,7 +38,6 @@ export default createStore({
       } catch(err) {
         console.log(err);
       }
-
       context.commit('toggleRegistration');
     },
 
@@ -43,6 +46,7 @@ export default createStore({
         const { user } = await firebase.auth.signInWithEmailAndPassword(loginForm.email, loginForm.password);
         context.dispatch('fetchUserData', user);
         context.commit('toggleLogin');
+        context.dispatch('fetchUsersPosts');
       } catch(err) {
         console.log(err.message);
       }
@@ -60,10 +64,11 @@ export default createStore({
       }
     },
 
-    async fetchUserData({ commit }, user) {
+    async fetchUserData({ commit, dispatch }, user) {
       try {
         const userData = await firebase.usersCollection.doc(user.uid).get();
-        commit('setUserProfile', userData.data());
+        commit('setUsersProfile', userData.data());
+        dispatch('fetchUsersPosts');
       } catch(err) {
         console.log(err.message);
       }
@@ -72,19 +77,38 @@ export default createStore({
     async logout({ commit }) {
       try {
         await firebase.auth.signOut();
-        commit('setUserProfile', {});
+        router.push('/');
+        commit('setUsersProfile', {});
+        commit('fetchUsersPosts', []);
       } catch(err) {
         console.log(err.message);
       }
     },
 
-    async createPost(context, post) {
+    async createPost({ dispatch }, post) {
       try {
         await firebase.recipesCollection.add({
-          date: new Date(),
+          date: fb.firestore.Timestamp.fromDate(new Date()),
           userId: firebase.auth.currentUser.uid,
           post: post.content
         });
+        dispatch('fetchUsersPosts');
+      } catch(err) {
+        console.log(err.message);
+      }
+    },
+
+    async fetchUsersPosts({ commit }) {
+      try {
+        firebase.recipesCollection.where('userId', '==', firebase.auth.currentUser.uid).onSnapshot(snapshot => {
+          const usersPostsArray = []
+
+          snapshot.forEach(post => {
+            usersPostsArray.push(post.data());
+          });
+          usersPostsArray.sort((a, b) => b.date - a.date);
+          commit('fetchUsersPosts', usersPostsArray);
+        })
       } catch(err) {
         console.log(err.message);
       }
