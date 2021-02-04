@@ -12,6 +12,8 @@ auth.onAuthStateChanged(user => {
     app.use(store).use(router).mount('#app');
   }
 
+  store.dispatch('fetchAllPosts');
+
   if (user) {
     store.dispatch('fetchUserData', user);
   }

@@ -35,6 +35,16 @@ const routes = [
     name: 'User Panel',
     component: () => import(/* webpackChunkName: "about" */ '../views/UserPanel.vue')
   },
+  {
+    path: '/register',
+    name: 'Registration',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Registration.vue')
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Login.vue')
+  },
 ]
 
 const router = createRouter({

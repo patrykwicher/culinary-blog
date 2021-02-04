@@ -3,10 +3,12 @@
     <Navigation />
   </div>
   <router-view/>
+  <Footer />
 </template>
 
 <script type="text/javascript">
   import Navigation from '@/components/Navigation.vue'
+  import Footer from '@/components/Footer.vue'
 
   export default {
     data() {
@@ -15,7 +17,8 @@
       }
     },
     components: {
-      Navigation
+      Navigation,
+      Footer
     }
   }
 </script>
@@ -42,6 +45,6 @@
 //   }
 // }
   #app {
-    margin: 0 12em 0 12em;
+    // margin: 0 12em 0 12em;
   }
 </style>

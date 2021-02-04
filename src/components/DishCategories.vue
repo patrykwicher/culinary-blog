@@ -48,8 +48,8 @@ $hover-color: #53800A;
     grid-template-columns: auto auto auto auto;
     grid-template-rows: 100%;
     column-gap: 2vw;
-    margin-bottom: 3em;
-    // box-sizing: border-box;
+    margin: 0 12em 0 12em;
+
     .dish-card {
       transition: color 0.3s;
 

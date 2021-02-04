@@ -11,8 +11,12 @@
         </div>
         <div class="login-register-user-logout-container">
           <div class="if-user-logged" v-if="!getUsersProfile.nickname">
-            <p @click="toggleLogin()">Login</p>
-            <p @click="toggleRegistration()">Register</p>
+            <router-link to="/login">
+              <p>Login</p>
+            </router-link>
+            <router-link to="/register" class="links">
+              <p>Register</p>
+            </router-link>
           </div>
           <div class="if-user-logged" v-else>
             <router-link to="/user-panel" class="links">
@@ -78,7 +82,9 @@ $hover-color: #53800A;
 .container {
     font-family: 'Work Sans', sans-serif;
     margin-bottom: 5vh;
-
+    margin: 0 12em 5vh 12em;
+    outline: none;
+    
     .header-container {
         display: flex;
         justify-content: space-between;
@@ -127,6 +133,10 @@ $hover-color: #53800A;
 
                 :first-child {
                   margin-right: 2em;
+                  text-decoration: none;
+                }
+
+                :last-child {
                   text-decoration: none;
                 }
 

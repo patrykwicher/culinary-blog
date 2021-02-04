@@ -9,6 +9,7 @@ export default createStore({
     toggleRegistration: false,
     usersProfile: {},
     usersPosts: [],
+    allPosts: []
   },
   mutations: {
     toggleLogin(state) {
@@ -29,12 +30,16 @@ export default createStore({
     fetchUsersPosts(state, usersPostsArray) {
       state.usersPosts = usersPostsArray;
     },
+    fetchAllPosts(state, allPostsArray) {
+      state.allPosts = allPostsArray;
+    }
   },
   actions: {
     async signUp(context, signupForm) {
       try {
         const { user } = await firebase.auth.createUserWithEmailAndPassword(signupForm.email, signupForm.password);
         context.dispatch('saveToDataBase', { user, signupForm });
+        router.push('/');
       } catch(err) {
         console.log(err);
       }
@@ -47,6 +52,8 @@ export default createStore({
         context.dispatch('fetchUserData', user);
         context.commit('toggleLogin');
         context.dispatch('fetchUsersPosts');
+        context.dispatch('fetchAllPosts');
+        router.push('/');
       } catch(err) {
         console.log(err.message);
       }
@@ -85,14 +92,17 @@ export default createStore({
       }
     },
 
-    async createPost({ dispatch }, post) {
+    async createPost({ dispatch, state }, post) {
       try {
         await firebase.recipesCollection.add({
           date: fb.firestore.Timestamp.fromDate(new Date()),
           userId: firebase.auth.currentUser.uid,
-          post: post.content
+          postTitle: post.title,
+          postContent: post.content,
+          userNickname: state.usersProfile.nickname
         });
         dispatch('fetchUsersPosts');
+        dispatch('fetchAllPosts');
       } catch(err) {
         console.log(err.message);
       }
@@ -109,6 +119,22 @@ export default createStore({
           usersPostsArray.sort((a, b) => b.date - a.date);
           commit('fetchUsersPosts', usersPostsArray);
         })
+      } catch(err) {
+        console.log(err.message);
+      }
+    },
+
+    async fetchAllPosts({ commit }) {
+      try {
+        firebase.recipesCollection.onSnapshot(snapshot => {
+          const allPostsArray = [];
+
+          snapshot.forEach(post => {
+            allPostsArray.push(post.data())
+          });
+          allPostsArray.sort((a, b) => b.date - a.date);
+          commit('fetchAllPosts', allPostsArray);
+        });
       } catch(err) {
         console.log(err.message);
       }
