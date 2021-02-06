@@ -53,7 +53,7 @@
           <p>Contact</p>
         </div>
         <div class="column-subcategory">
-          <p><i class="fab fa-facebook-f"></i>Facebook</p>
+          <p>Facebook</p>
           <p>Twitter</p>
           <p>Pinterest</p>
           <p>Instagram</p>

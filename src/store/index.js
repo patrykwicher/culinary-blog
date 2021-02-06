@@ -8,27 +8,25 @@ export default createStore({
     toggleLogin: false,
     toggleRegistration: false,
     usersProfile: {},
-    usersPosts: [],
-    allPosts: []
+    allPosts: [],
+    xd: {}
+  },
+  getters: {
+    usersPostsWithProperDateFormat: state => {
+      const usersPosts = [];
+
+      state.allPosts.forEach(post => {
+        if(post.userId === firebase.auth.currentUser.uid) {
+          usersPosts.push(post);
+        }
+      });
+
+      return usersPosts;
+    }
   },
   mutations: {
-    toggleLogin(state) {
-      if(!state.toggleLogin) {
-        state.toggleRegistration = false;
-      }
-      state.toggleLogin = !state.toggleLogin;
-    },
-    toggleRegistration(state) {
-      if(!state.toggleRegistration) {
-        state.toggleLogin = false;
-      }
-      state.toggleRegistration = !state.toggleRegistration;
-    },
     setUsersProfile(state, userData) {
       state.usersProfile = userData;
-    },
-    fetchUsersPosts(state, usersPostsArray) {
-      state.usersPosts = usersPostsArray;
     },
     fetchAllPosts(state, allPostsArray) {
       state.allPosts = allPostsArray;
@@ -51,7 +49,6 @@ export default createStore({
         const { user } = await firebase.auth.signInWithEmailAndPassword(loginForm.email, loginForm.password);
         context.dispatch('fetchUserData', user);
         context.commit('toggleLogin');
-        context.dispatch('fetchUsersPosts');
         context.dispatch('fetchAllPosts');
         router.push('/');
       } catch(err) {
@@ -71,11 +68,10 @@ export default createStore({
       }
     },
 
-    async fetchUserData({ commit, dispatch }, user) {
+    async fetchUserData({ commit }, user) {
       try {
         const userData = await firebase.usersCollection.doc(user.uid).get();
         commit('setUsersProfile', userData.data());
-        dispatch('fetchUsersPosts');
       } catch(err) {
         console.log(err.message);
       }
@@ -86,7 +82,6 @@ export default createStore({
         await firebase.auth.signOut();
         router.push('/');
         commit('setUsersProfile', {});
-        commit('fetchUsersPosts', []);
       } catch(err) {
         console.log(err.message);
       }
@@ -101,24 +96,7 @@ export default createStore({
           postContent: post.content,
           userNickname: state.usersProfile.nickname
         });
-        dispatch('fetchUsersPosts');
         dispatch('fetchAllPosts');
-      } catch(err) {
-        console.log(err.message);
-      }
-    },
-
-    async fetchUsersPosts({ commit }) {
-      try {
-        firebase.recipesCollection.where('userId', '==', firebase.auth.currentUser.uid).onSnapshot(snapshot => {
-          const usersPostsArray = []
-
-          snapshot.forEach(post => {
-            usersPostsArray.push(post.data());
-          });
-          usersPostsArray.sort((a, b) => b.date - a.date);
-          commit('fetchUsersPosts', usersPostsArray);
-        })
       } catch(err) {
         console.log(err.message);
       }
@@ -130,9 +108,24 @@ export default createStore({
           const allPostsArray = [];
 
           snapshot.forEach(post => {
-            allPostsArray.push(post.data())
+            allPostsArray.push(post.data());
           });
           allPostsArray.sort((a, b) => b.date - a.date);
+
+          allPostsArray.forEach(post => {
+            if(post.date.toDate().getDate() > 0 && post.date.toDate().getDate() < 10){
+              if(post.date.toDate().getMonth() + 1 > 0 && post.date.toDate().getMonth() + 1 < 10) {
+                post.date = `0${post.date.toDate().getDate()}-0${post.date.toDate().getMonth() + 1}-${post.date.toDate().getFullYear()}`;
+              }
+              else post.date = `0${post.date.toDate().getDate()}-${post.date.toDate().getMonth() + 1}-${post.date.toDate().getFullYear()}`;
+            }
+            else {
+              if(post.date.toDate().getMonth() + 1 > 0 && post.date.toDate().getMonth() + 1 < 10) {
+                post.date = `${post.date.toDate().getDate()}-0${post.date.toDate().getMonth() + 1}-${post.date.toDate().getFullYear()}`;
+              }
+              else post.date = `${post.date.toDate().getDate()}-${post.date.toDate().getMonth() + 1}-${post.date.toDate().getFullYear()}`;
+            }
+          });
           commit('fetchAllPosts', allPostsArray);
         });
       } catch(err) {

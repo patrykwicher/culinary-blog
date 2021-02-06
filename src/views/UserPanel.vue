@@ -9,7 +9,7 @@
       </div>
       <form @submit.prevent>
         <div class="post-content">
-          <textarea id="title-textarea" v-model.trim="post.title" type="text" name="title" placeholder="Post title..." />
+          <textarea id="title-textarea" v-model.trim="post.title" name="title" placeholder="Post title..." />
           <!-- <label for="post-content">Create a Post!</label> -->
           <textarea id="post-content" v-model.trim="post.content" name="post-content" placeholder="Write a post!" />
         </div>
@@ -17,10 +17,10 @@
       </form>
     </div>
     <div class="posts-container">
-      <div class="post" v-for="(post, index) in getUsersPosts" :key="index">
+      <div class="post" v-for="(post, index) in getUsersPostsWithProperDataFormat" :key="index">
         <div class="informations-about">
           <p>{{ post.userNickname }}</p>
-          <p>{{ post.date.toDate().getDate() }}-{{ post.date.toDate().getMonth() + 1 }}-{{ post.date.toDate().getFullYear() }}</p>
+          <p>{{ post.date }}</p>
         </div>
         <div class="fetched-post">
           <p>{{ post.postTitle }}</p>
@@ -52,8 +52,8 @@ export default {
     getUsersProfile() {
       return this.$store.state.usersProfile;
     },
-    getUsersPosts() {
-      return this.$store.state.usersPosts;
+    getUsersPostsWithProperDataFormat() {
+      return this.$store.getters.usersPostsWithProperDateFormat;
     },
   },
 }
@@ -66,7 +66,7 @@ $peas-color: #90C041;
     display: flex;
     font-family: "Work Sans", sans-serif;
     margin: 0 12em 0 12em;
-    
+
     .user-container {
         display: flex;
         flex-direction: column;

@@ -54,12 +54,6 @@
 <script>
 export default {
   methods: {
-    toggleLogin() {
-      this.$store.commit('toggleLogin');
-    },
-    toggleRegistration() {
-      this.$store.commit('toggleRegistration');
-    },
     logout() {
       this.$store.dispatch('logout')
     }
@@ -84,7 +78,7 @@ $hover-color: #53800A;
     margin-bottom: 5vh;
     margin: 0 12em 5vh 12em;
     outline: none;
-    
+
     .header-container {
         display: flex;
         justify-content: space-between;
@@ -93,6 +87,7 @@ $hover-color: #53800A;
 
         .logo-container {
             display: flex;
+            outline: none;
 
             .links {
                 text-decoration: none;

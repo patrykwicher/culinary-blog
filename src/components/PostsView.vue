@@ -3,7 +3,7 @@
   <div class="container">
     <div class="posts-container" v-for="(post, index) in fetchAllPosts" :key="index">
       <div class="informations-about">
-        <p> {{ post.date.toDate().getDate() }} - {{ post.date.toDate().getMonth() + 1 }} - {{ post.date.toDate().getFullYear() }} </p>
+        <p> {{ post.date }}</p>
         <p> {{ post.userNickname }} </p>
       </div>
       <div class="fetched-post">
@@ -16,11 +16,15 @@
 
 <script>
 export default {
+  data() {
+    return {
+    }
+  },
   computed: {
     fetchAllPosts() {
       return this.$store.state.allPosts;
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -28,7 +32,6 @@ export default {
 h1 {
   font-family: 'Work Sans', sans-serif;
   text-align: center;
-  // margin-top: 10%;
   padding-top: 5%;
 }
 
@@ -36,6 +39,7 @@ h1 {
     display: grid;
     grid-template-columns: 32% 32% 32%;
     column-gap: 2%;
+    row-gap: 1.5em;
     font-family: 'Work Sans', sans-serif;
     margin: 0 12em 0 12em;
 
@@ -55,7 +59,6 @@ h1 {
       }
 
       .fetched-post {
-
 
         :first-child {
           text-align: center;

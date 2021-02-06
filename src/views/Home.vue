@@ -1,5 +1,5 @@
-<template lang="">
-  <div class="">
+<template lang="html">
+  <div class="container">
     <div class="dish-cat-comp">
       <DishCategories />
       <PostsView />
@@ -28,13 +28,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .dish-cat-comp {
-    position: relative;
-  }
-
-  .login-comp {
-    position: absolute;
-    width: 100%;
-    top: 40%;
-  }
 </style>

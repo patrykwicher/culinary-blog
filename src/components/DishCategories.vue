@@ -2,7 +2,7 @@
   <div class="main-menu">
     <div class="dish-card">
       <div class="image">
-        <img :src="require('@/assets/pasta2.jpg')" alt="Main Dishes" class="kurwo"/>
+        <img :src="require('@/assets/pasta2.jpg')" alt="Main Dishes" />
       </div>
       <div class="dish-type">
         <h2>Main Dishes</h2>
@@ -10,7 +10,7 @@
     </div>
     <div class="dish-card">
       <div class="image">
-        <img :src="require('@/assets/soup2.jpg')" alt="Main Dishes" class="kurwo"/>
+        <img :src="require('@/assets/soup2.jpg')" alt="Main Dishes" />
       </div>
       <div class="dish-type">
         <h2>Soup</h2>
@@ -18,7 +18,7 @@
     </div>
     <div class="dish-card">
       <div class="image">
-        <img :src="require('@/assets/salad2.jpg')" alt="Main Dishes" class="kurwo"/>
+        <img :src="require('@/assets/salad2.jpg')" alt="Main Dishes" />
       </div>
       <div class="dish-type">
         <h2>Salad</h2>
@@ -26,7 +26,7 @@
     </div>
     <div class="dish-card">
       <div class="image">
-        <img :src="require('@/assets/dessert2.jpg')" alt="Main Dishes" class="kurwo"/>
+        <img :src="require('@/assets/dessert2.jpg')" alt="Main Dishes" />
       </div>
       <div class="dish-type">
         <h2>Dessert</h2>

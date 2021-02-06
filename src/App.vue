@@ -1,7 +1,5 @@
 <template>
-  <div id="nav">
-    <Navigation />
-  </div>
+  <Navigation />
   <router-view/>
   <Footer />
 </template>
@@ -47,4 +45,5 @@
   #app {
     // margin: 0 12em 0 12em;
   }
+
 </style>
