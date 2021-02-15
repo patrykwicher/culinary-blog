@@ -10,10 +10,22 @@
       <form @submit.prevent>
         <div class="post-content">
           <textarea id="title-textarea" v-model.trim="post.title" name="title" placeholder="Post title..." />
-          <!-- <label for="post-content">Create a Post!</label> -->
           <textarea id="post-content" v-model.trim="post.content" name="post-content" placeholder="Write a post!" />
+          <div class="img-container">
+            <input type="file" name="post-img" accept="image/*" ref="image-input" @change="getImage" required>
+          </div>
+          <div class="select-class">
+            <label for="dish-type">Choose a dish type: </label>
+            <select id="dish-type" @change="selectedDishType($event)" required>
+              <option value="" disabled selected>Choose type of a dish</option>
+              <option value="Main dish">Main dish</option>
+              <option value="Salad">Salad</option>
+              <option value="Soup">Soup</option>
+              <option value="Dessert">Dessert</option>
+            </select>
+          </div>
         </div>
-        <button name="button" @click="createPost()" :disabled="post.content && post.title === ''">Publish</button>
+        <button name="button" @click="createPost()" :disabled="post.content && post.title && post.dishType && post.imageData === ''">Publish</button>
       </form>
     </div>
     <div class="posts-container">
@@ -24,6 +36,8 @@
         </div>
         <div class="fetched-post">
           <p>{{ post.postTitle }}</p>
+          <img :src="post.imageUrl" alt="XD">
+          <p> {{ post.dishType }}</p>
           <p>{{ post.postContent }}</p>
         </div>
       </div>
@@ -37,7 +51,9 @@ export default {
     return {
       post: {
         title: '',
-        content: ``
+        content: '',
+        imageData: null,
+        dishType: ''
       },
     }
   },
@@ -47,6 +63,12 @@ export default {
       this.post.title = '';
       this.post.content = '';
     },
+    getImage(event) {
+      this.post.imageData = event.target.files[0];
+    },
+    selectedDishType(event) {
+      this.post.dishType = event.target.value;
+    }
   },
   computed: {
     getUsersProfile() {
@@ -90,10 +112,14 @@ $peas-color: #90C041;
 
         .post-content {
 
-            label {
-                display: block;
-                text-align: center;
-                margin-bottom: 5%;
+            .select-class {
+              margin: 2% 0 2% 0;
+            }
+
+            .img-container {
+              input {
+
+              }
             }
 
             #title-textarea {
@@ -113,6 +139,10 @@ $peas-color: #90C041;
                 box-sizing: border-box;
                 padding: 3%;
                 resize: none;
+            }
+
+            .img-container {
+              display: flex;
             }
         }
 
@@ -150,11 +180,22 @@ $peas-color: #90C041;
 
             .fetched-post {
                 margin: 0 3%;
+
                 :first-child {
                     text-align: center;
                     font-size: 1.5em;
                     font-weight: bold;
                     margin-top: 0;
+                }
+
+                img {
+                  width: 100%;
+                  height: 100%;
+                }
+
+                :last-child {
+                  // pozwala na new-line, spacje, etc.
+                  white-space: pre-wrap;
                 }
             }
         }

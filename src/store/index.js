@@ -5,11 +5,10 @@ import fb from 'firebase/app'
 
 export default createStore({
   state: {
-    toggleLogin: false,
-    toggleRegistration: false,
     usersProfile: {},
     allPosts: [],
-    xd: {}
+    increment: 1,
+    selectedPost: {}
   },
   getters: {
     usersPostsWithProperDateFormat: state => {
@@ -22,7 +21,7 @@ export default createStore({
       });
 
       return usersPosts;
-    }
+    },
   },
   mutations: {
     setUsersProfile(state, userData) {
@@ -30,6 +29,12 @@ export default createStore({
     },
     fetchAllPosts(state, allPostsArray) {
       state.allPosts = allPostsArray;
+    },
+    increment(state) {
+      state.increment++;
+    },
+    setSelectedPost(state, selectedPost) {
+      state.selectedPost = selectedPost;
     }
   },
   actions: {
@@ -41,6 +46,7 @@ export default createStore({
       } catch(err) {
         console.log(err);
       }
+
       context.commit('toggleRegistration');
     },
 
@@ -48,7 +54,6 @@ export default createStore({
       try {
         const { user } = await firebase.auth.signInWithEmailAndPassword(loginForm.email, loginForm.password);
         context.dispatch('fetchUserData', user);
-        context.commit('toggleLogin');
         context.dispatch('fetchAllPosts');
         router.push('/');
       } catch(err) {
@@ -87,15 +92,24 @@ export default createStore({
       }
     },
 
-    async createPost({ dispatch, state }, post) {
+    async createPost({ dispatch, state, commit }, post) {
       try {
-        await firebase.recipesCollection.add({
+
+        const createdPost = {
           date: fb.firestore.Timestamp.fromDate(new Date()),
           userId: firebase.auth.currentUser.uid,
           postTitle: post.title,
           postContent: post.content,
-          userNickname: state.usersProfile.nickname
-        });
+          userNickname: state.usersProfile.nickname,
+          dishType: post.dishType
+        };
+
+        await firebase.storageReference.child('post-images/' + state.increment + post.imageData.name).put(post.imageData);
+        const getDownloadUrlOfPostImage = await firebase.storageReference.child('post-images/' + state.increment + post.imageData.name).getDownloadURL();
+        createdPost.imageUrl = getDownloadUrlOfPostImage;
+        await firebase.recipesCollection.add(createdPost);
+
+        commit('increment');
         dispatch('fetchAllPosts');
       } catch(err) {
         console.log(err.message);
@@ -126,8 +140,32 @@ export default createStore({
               else post.date = `${post.date.toDate().getDate()}-${post.date.toDate().getMonth() + 1}-${post.date.toDate().getFullYear()}`;
             }
           });
+
           commit('fetchAllPosts', allPostsArray);
         });
+      } catch(err) {
+        console.log(err.message);
+      }
+    },
+    async getPostData({ commit }, postData) {
+      try {
+        let tempPost = {};
+        let properPost = [];
+
+        if(postData.imageUrl) {
+          tempPost = await firebase.recipesCollection.where('imageUrl', '==', postData.imageUrl).get();
+        }
+        else if(postData.title) {
+          tempPost = await firebase.recipesCollection.where('postTitle', '==', postData.title).get();
+        }
+
+        tempPost.forEach(post => {
+          properPost.push(post.data());
+          properPost[0].postId = post.id;
+        })
+
+        commit('setSelectedPost', properPost[0]);
+        router.push({ path: `/post/${properPost[0].postId}`});
       } catch(err) {
         console.log(err.message);
       }

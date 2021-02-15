@@ -1,6 +1,7 @@
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firestore'
+import 'firebase/storage'
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -17,12 +18,16 @@ firebase.initializeApp(firebaseConfig);
 // utils
 const db = firebase.firestore();
 const auth = firebase.auth();
+const storage = firebase.storage();
 
 // collection references
 const usersCollection = db.collection('users');
 const recipesCollection = db.collection('recipes');
 const commentsCollection = db.collection('comments');
 const likesCollection = db.collection('likes')
+// points to the root of Cloud storage bucket
+const storageReference = storage.ref();
+// reference to a locotaion lower in the tree
 
 export {
   db,
@@ -30,5 +35,7 @@ export {
   usersCollection,
   recipesCollection,
   commentsCollection,
-  likesCollection
+  likesCollection,
+  storageReference,
+  storage
 }

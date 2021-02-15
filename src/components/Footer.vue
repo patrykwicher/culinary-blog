@@ -96,7 +96,7 @@ $border-bottom-color: #c9c7c7;
       }
 
       :first-child {
-        margin-right: 0.2%;
+        margin-right: 0.5%;
       }
     }
 

@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
+import { auth } from '../firebase'
 
 const routes = [
   {
@@ -18,38 +19,57 @@ const routes = [
   {
     path: '/desserts',
     name: 'Desserts',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Desserts.vue')
+    component: () => import('../views/Desserts.vue')
   },
   {
     path: '/salads',
     name: 'Salads',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Salads.vue')
+    component: () => import('../views/Salads.vue')
   },
   {
     path: '/about',
     name: 'About',
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    component: () => import('../views/About.vue')
   },
   {
     path: '/user-panel',
     name: 'User Panel',
-    component: () => import(/* webpackChunkName: "about" */ '../views/UserPanel.vue')
+    component: () => import('../views/UserPanel.vue'),
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/register',
     name: 'Registration',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Registration.vue')
+    component: () => import('../views/Registration.vue')
   },
   {
     path: '/login',
     name: 'Login',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Login.vue')
+    component: () => import('../views/Login.vue')
   },
+  {
+    path: '/post/:postId',
+    name: 'Post View',
+    component: () => import('../views/PostView.vue')
+  }
 ]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  const requiresAuth = to.matched.some(path => path.meta.requiresAuth);
+
+  if(requiresAuth && !auth.currentUser) {
+    next('/');
+  }
+  else {
+    next();
+  }
 })
 
 export default router
