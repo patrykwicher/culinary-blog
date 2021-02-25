@@ -29,22 +29,25 @@
       <nav>
         <div class="nav-container">
           <div class="links-container">
-          <div>
-            <router-link class="links" to="/">HOME</router-link>
-          </div>
-          <div>
-            <router-link class="links" to="/main-dishes">MAIN DISHES</router-link>
-          </div>
-          <div>
-            <router-link class="links" to="/desserts">DESSERTS</router-link>
-          </div>
-          <div>
-            <router-link class="links" to="/salads">SALADS</router-link>
-          </div>
-          <div>
-            <router-link class="links" to="/about">ABOUT</router-link>
+            <div>
+              <router-link class="links" to="/">HOME</router-link>
+            </div>
+            <div>
+              <router-link class="links" to="/main-dishes">MAIN DISHES</router-link>
+            </div>
+            <div>
+              <router-link class="links" to="/desserts">DESSERTS</router-link>
+            </div>
+            <div>
+              <router-link class="links" to="/salads">SALADS</router-link>
+            </div>
+            <div>
+              <router-link class="links" to="/about">ABOUT</router-link>
+            </div>
           </div>
         </div>
+        <div class="cookbook-bar">
+          <p>The Peas & Loaf Cookbook is here. <a href="#">Order Now!</a></p>
         </div>
       </nav>
     </header>
@@ -75,8 +78,7 @@ $hover-color: #53800A;
 
 .container {
     font-family: 'Work Sans', sans-serif;
-    margin-bottom: 5vh;
-    margin: 0 12em 5vh 12em;
+    margin: 0 12em 5vh;
     outline: none;
 
     .header-container {
@@ -125,14 +127,13 @@ $hover-color: #53800A;
 
             .if-user-logged {
                 display: flex;
-
                 :first-child {
-                  margin-right: 2em;
-                  text-decoration: none;
+                    margin-right: 2em;
+                    text-decoration: none;
                 }
 
                 :last-child {
-                  text-decoration: none;
+                    text-decoration: none;
                 }
 
                 p {
@@ -167,6 +168,28 @@ $hover-color: #53800A;
                 font-size: 0.8em;
             }
         }
+    }
+
+    .cookbook-bar {
+      text-align: center;
+      font-size: 1.2em;
+      background-color: #E5F5F7;
+      border-radius: 5px;
+      margin-top: 3%;
+
+      p {
+        padding: 2% 0;
+
+        a {
+          color: $hover-color;
+
+          &:hover {
+            opacity: 0.8;
+            transition: opacity 0.3s;
+            text-decoration: none;
+          }
+        }
+      }
     }
 }
 </style>

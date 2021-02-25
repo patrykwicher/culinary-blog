@@ -8,7 +8,8 @@ export default createStore({
     usersProfile: {},
     allPosts: [],
     increment: 1,
-    selectedPost: {}
+    selectedPost: {},
+    arrayOfSpecifiedDishes: [],
   },
   getters: {
     usersPostsWithProperDateFormat: state => {
@@ -35,6 +36,28 @@ export default createStore({
     },
     setSelectedPost(state, selectedPost) {
       state.selectedPost = selectedPost;
+    },
+    showPostsWithSpecifiedDishType(state, dishType) {
+      try {
+        let arrayOfSpecifiedDishes = [];
+
+        state.allPosts.forEach(post => {
+          if(post.dishType === dishType) {
+            arrayOfSpecifiedDishes.push(Object.assign({}, post));
+          }
+        });
+
+        state.arrayOfSpecifiedDishes = arrayOfSpecifiedDishes;
+
+        if(dishType === 'Main dish') {
+          router.push({ path: `/Main_dishes`});
+        }
+        else {
+          router.push({ path: `/${dishType}s`});
+        }
+      } catch(err) {
+        console.log(err.message);
+      }
     }
   },
   actions: {
@@ -162,14 +185,27 @@ export default createStore({
         tempPost.forEach(post => {
           properPost.push(post.data());
           properPost[0].postId = post.id;
-        })
+        });
+
+        if(properPost[0].date.toDate().getDate() > 0 && properPost[0].date.toDate().getDate() < 10){
+          if(properPost[0].date.toDate().getMonth() + 1 > 0 && properPost[0].date.toDate().getMonth() + 1 < 10) {
+            properPost[0].date = `0${properPost[0].date.toDate().getDate()}-0${properPost[0].date.toDate().getMonth() + 1}-${properPost[0].date.toDate().getFullYear()}`;
+          }
+          else properPost[0].date = `0${properPost[0].date.toDate().getDate()}-${properPost[0].date.toDate().getMonth() + 1}-${properPost[0].date.toDate().getFullYear()}`;
+        }
+        else {
+          if(properPost[0].date.toDate().getMonth() + 1 > 0 && properPost[0].date.toDate().getMonth() + 1 < 10) {
+            properPost[0].date = `${properPost[0].date.toDate().getDate()}-0${properPost[0].date.toDate().getMonth() + 1}-${properPost[0].date.toDate().getFullYear()}`;
+          }
+          else properPost[0].date = `${properPost[0].date.toDate().getDate()}-${properPost[0].date.toDate().getMonth() + 1}-${properPost[0].date.toDate().getFullYear()}`;
+        }
 
         commit('setSelectedPost', properPost[0]);
         router.push({ path: `/post/${properPost[0].postId}`});
       } catch(err) {
         console.log(err.message);
       }
-    }
+    },
   },
   modules: {
   }

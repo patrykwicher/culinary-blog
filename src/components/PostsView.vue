@@ -8,13 +8,10 @@
       </div>
       <div class="fetched-post">
         <div class="image-container" @click="showPost($event)">
-          <!-- <router-link :to="{ name: 'Post View', params: { selectedPost.postId }}"> -->
-            <img :src="post.imageUrl" alt="">
-          <!-- </router-link> -->
+          <img :src="post.imageUrl" alt="">
         </div>
         <p class="dish-type"> {{ post.dishType }} </p>
         <p class="title" @click="showPost($event)"> {{ post.postTitle }} </p>
-        <p class="post-content"> {{ post.postCOntent }}</p>
         <!-- <p class="post-content" v-if="post.postContent === fetchAllPosts[0].postContent"> {{ post.postContent.split(' ').slice(0, 32).join(" ") }}... </p> -->
       </div>
     </div>
@@ -22,8 +19,6 @@
 </template>
 
 <script>
-// import router from '@/router/index'
-
 export default {
   data() {
     return {
@@ -61,7 +56,7 @@ $description-color: #9E9E9E;
     font-size: 2.7em;
     font-family: 'Work Sans', sans-serif;
     text-align: center;
-    margin: 4% 0 1% 0;
+    margin: 5% 0 2% 0;
     font-weight: 300;
 }
 
@@ -121,9 +116,13 @@ $description-color: #9E9E9E;
                 height: 100%;
                 object-fit: cover;
                 // overflow: hidden;
+                box-sizing: border-box;
 
                 &:hover {
                   cursor: pointer;
+                   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+                  // border: 2px dashed $hover-green-color;
                 }
               }
             }
