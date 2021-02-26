@@ -17,7 +17,7 @@
             <input id="choose-image" type="file" name="post-img" accept="image/*" ref="image-input" @change="getImage" required>
           </div>
           <div class="select-class">
-            <label for="dish-type">Choose a dish type: </label>
+            <label for="dish-type">Choose dish type: </label>
             <select id="dish-type" @change="selectedDishType($event)" required>
               <option value="" disabled selected>Choose type of a dish</option>
               <option value="Main dish">Main dish</option>

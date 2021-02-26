@@ -40,16 +40,35 @@ export default createStore({
     showPostsWithSpecifiedDishType(state, dishType) {
       try {
         let arrayOfSpecifiedDishes = [];
+        let tempVar;
+        let newDishTypeVar;
+
+        if(dishType === 'Main Dishes') {
+          tempVar = dishType.split('');
+          tempVar.splice(dishType.length-2, 2)
+          tempVar[5] = 'd';
+          newDishTypeVar = tempVar.join('');
+          console.log(newDishTypeVar);
+        }
+        else if(dishType === 'Desserts' || dishType === 'Soups' || dishType === 'Salads'){
+          tempVar = dishType.split('');
+          tempVar.splice(dishType.length-1, 1);
+          newDishTypeVar = tempVar.join('');
+          console.log(newDishTypeVar);
+        }
+        else {
+          newDishTypeVar = dishType;
+        }
 
         state.allPosts.forEach(post => {
-          if(post.dishType === dishType) {
+          if(post.dishType === newDishTypeVar) {
             arrayOfSpecifiedDishes.push(Object.assign({}, post));
           }
         });
 
         state.arrayOfSpecifiedDishes = arrayOfSpecifiedDishes;
 
-        if(dishType === 'Main dish') {
+        if(newDishTypeVar === 'Main dish' || newDishTypeVar === 'Main Dish') {
           router.push({ path: `/Main_dishes`});
         }
         else {

@@ -30,19 +30,19 @@
         <div class="nav-container">
           <div class="links-container">
             <div>
-              <router-link class="links" to="/">HOME</router-link>
+              <router-link class="links" to="/">Home</router-link>
             </div>
-            <div>
-              <router-link class="links" to="/main-dishes">MAIN DISHES</router-link>
+            <div @click="getDishTypeValue($event)" class="links">
+              <p>Main Dishes</p>
             </div>
-            <div>
-              <router-link class="links" to="/desserts">DESSERTS</router-link>
+            <div @click="getDishTypeValue($event)" class="links">
+              <p>Desserts</p>
             </div>
-            <div>
-              <router-link class="links" to="/salads">SALADS</router-link>
+            <div @click="getDishTypeValue($event)" class="links">
+              <p>Salads</p>
             </div>
-            <div>
-              <router-link class="links" to="/about">ABOUT</router-link>
+            <div @click="getDishTypeValue($event)" class="links">
+              <p>Soups</p>
             </div>
           </div>
         </div>
@@ -59,6 +59,11 @@ export default {
   methods: {
     logout() {
       this.$store.dispatch('logout')
+    },
+    getDishTypeValue(event) {
+      let dishType = event.target.textContent;
+
+      this.$store.commit('showPostsWithSpecifiedDishType', dishType);
     }
   },
   computed: {
@@ -161,11 +166,18 @@ $hover-color: #53800A;
             margin: 0 8em;
             display: flex;
             justify-content: space-evenly;
+            align-items: center;
 
             .links {
                 text-decoration: none;
                 color: $font-color;
                 font-size: 0.8em;
+                margin-top: 0;
+                cursor: pointer;
+
+                P {
+                  margin: 0;
+                }
             }
         }
     }
