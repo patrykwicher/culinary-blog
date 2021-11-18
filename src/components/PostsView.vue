@@ -1,7 +1,10 @@
 <template lang="html">
   <p class="header">Recent posts...</p>
-  <div class="container">
-    <div class="posts-container" v-for="(post, index) in fetchAllPosts" :key="index" >
+  <div class="no-posts" v-if="fetchAllPosts.length === 0">
+    No posts...
+  </div>
+  <div class="container" v-else>
+    <div class="posts-container" v-for="(post, index) in fetchAllPosts" :key="index">
       <div class="informations-about" :style="{ display: 'none' }">
         <p> {{ post.date }}</p>
         <p> {{ post.userNickname }} </p>
@@ -58,6 +61,13 @@ $description-color: #9E9E9E;
     text-align: center;
     margin: 5% 0 2% 0;
     font-weight: 400;
+}
+
+.no-posts {
+  text-align: center;
+  margin: 2rem 0;
+  min-height: 30vh;
+  font-family: "Work Sans", sans-serif;
 }
 
 .container {
@@ -214,6 +224,10 @@ $description-color: #9E9E9E;
     margin-bottom: 0.7em;
   }
 
+  .no-posts {
+    font-size: 1.4rem;
+  }
+
   .container {
     margin: 1% 0 3% 0;
     grid-template-columns: 1fr 1fr 1fr;
@@ -247,6 +261,10 @@ $description-color: #9E9E9E;
     margin-bottom: 1%;
   }
 
+  .no-posts {
+    font-size: 1.7rem;
+  }
+
   .container {
     margin: 0 6em 3% 6em;
     grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -269,6 +287,10 @@ $description-color: #9E9E9E;
     font-size: 4.5em;
   }
 
+  .no-posts {
+    font-size: 2rem;
+  }
+
   .container {
     .posts-container {
       .fetched-post {
@@ -288,6 +310,10 @@ $description-color: #9E9E9E;
   .header {
     font-size: 9em;
     margin-bottom: 2%;
+  }
+
+  .no-posts {
+    font-size: 4rem;
   }
 
   .container {
