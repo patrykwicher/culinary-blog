@@ -92,4 +92,166 @@ $hover-color: #53800A;
     }
   }
 }
+
+@media (max-width: 360px) {
+  .main-menu {
+    margin: 0;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: 100%;
+    column-gap: 3vw;
+    height: 180px;
+    box-sizing: border-box;
+
+    .dish-card {
+      transition: color 0.3s;
+
+      &:hover {
+        color: $hover-color;
+        cursor: pointer;
+        transition: color 0.3s;
+      }
+
+      .image {
+        width: 100%;
+        height: 130px;
+
+        img {
+          height: 130px
+        }
+      }
+
+      .dish-type {
+        font-size: 0.7em;
+
+        h2 {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 361px) {
+  .main-menu {
+    margin: 0;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: 100%;
+    column-gap: 3vw;
+    height: 180px;
+
+    .dish-card {
+      transition: color 0.3s;
+
+      &:hover {
+        color: $hover-color;
+        cursor: pointer;
+        transition: color 0.3s;
+      }
+
+      .image {
+        width: 100%;
+        height: 130px;
+
+        img {
+          height: 130px
+        }
+      }
+
+      .dish-type {
+        font-size: 0.7em;
+
+        h2 {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .main-menu {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 2%;
+
+    .dish-card {
+      .image {
+        height: 150px;
+
+        img {
+          height: 150px;
+        }
+      }
+
+      .dish-type {
+        font-size: 0.9em;
+      }
+    }
+  }
+}
+
+@media (min-width: 834px) {
+  .main-menu {
+    .dish-card {
+      .dish-type {
+        font-size: 0.9em;
+      }
+    }
+  }
+}
+
+@media (min-width: 1280px) {
+  .main-menu {
+    margin: 0 6em;
+
+    .dish-card {
+      .image {
+        height: 200px;
+
+        img {
+          height: 200px;
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 1920px) {
+  .main-menu {
+    .dish-card {
+      .image {
+        height: 280px;
+
+        img {
+          height: 280px;
+        }
+      }
+
+      .dish-type {
+        font-size: 1.7em;
+      }
+    }
+  }
+}
+
+@media (min-width: 3840px) {
+  .main-menu {
+    margin: 0 10%;
+
+    .dish-card {
+      .image {
+        height: 550px;
+
+        img {
+          height: 550px;
+        }
+      }
+
+      .dish-type {
+        font-size: 3.5em;
+      }
+    }
+  }
+}
 </style>

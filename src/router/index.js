@@ -14,11 +14,6 @@ const routes = [
     component: () => import('../views/SpecifiedDishes.vue')
   },
   {
-    path: '/about',
-    name: 'About',
-    component: () => import('../views/About.vue')
-  },
-  {
     path: '/user-panel',
     name: 'User Panel',
     component: () => import('../views/UserPanel.vue'),
