@@ -1,6 +1,6 @@
 # culinary-blog
 
-Blog app based on Vue.js and Firebase, that allows to create posts with an image and text.
+Blog app based on Vue.js and Firebase, that allows to create account and posts with text and image.
 
 # Tech Stack
 - Vue.js
