@@ -9,6 +9,7 @@ Blog app based on Vue.js and Firebase, that allows to create posts with an image
 - Firebase (Firestore Database, Storage)
 - JavaScript (ES6)
 - Sass preprocessor
+- RWD
 
 # How to run
 Head to **culinary-blog** directory and use **npm run serve** command.
