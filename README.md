@@ -1,24 +1,17 @@
 # culinary-blog
 
-## Project setup
-```
-yarn install
-```
+Blog app based on Vue.js and Firebase, that allows to create posts with an image and text.
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+# Tech Stack
+- Vue.js
+- Vuex
+- Vue Router
+- Firebase (Firestore Database, Storage)
+- JavaScript (ES6)
+- Sass preprocessor
 
-### Compiles and minifies for production
-```
-yarn build
-```
+# How to run
+Head to **culinary-blog** directory and use **npm run serve** command.
 
-### Lints and fixes files
-```
-yarn lint
-```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+
