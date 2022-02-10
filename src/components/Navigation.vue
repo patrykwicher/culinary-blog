@@ -11,18 +11,18 @@
         </div>
         <div class="login-register-user-logout-container" v-if="windowWidth > 768">
           <div class="if-user-logged" v-if="!getUsersProfile.nickname">
-            <router-link to="/login">
+            <router-link class="router-link" to="/login">
               <p>Login</p>
             </router-link>
-            <router-link to="/register" class="links">
+            <router-link class="router-link" to="/register" >
               <p>Register</p>
             </router-link>
           </div>
           <div class="if-user-logged" v-else>
-            <router-link to="/user-panel" class="links">
+            <router-link to="/user-panel" class="router-link">
               <p> {{ getUsersProfile.nickname }}</p>
             </router-link>
-            <router-link :to="{ name: '', params: {} }">
+            <router-link :to="{ name: '', params: {} }" class="router-link">
               <p @click="logout()">Logout</p>
             </router-link>
           </div>
@@ -47,7 +47,7 @@
               </div>
             </div>
             <div class="links">
-              <router-link class="links" to="/" @click="closeMenu()">Home</router-link>
+              <router-link class="router-link" to="/">Home</router-link>
             </div>
             <div @click="getDishTypeValue($event)" class="links">
               <p>Main Dishes</p>
@@ -623,10 +623,6 @@ $hover-color: #53800A;
                   height: 1.5em;
               }
 
-              :nth-child(2) {
-                  // margin: 2% 1% 0 0.5%;
-              }
-
               h2 {
                   font-size: 2.5em;
               }
@@ -637,6 +633,16 @@ $hover-color: #53800A;
         .if-user-logged {
           align-items: center;
           font-size: 1.1em;
+
+          .router-link {
+            p {
+              transition: .2s ease; 
+
+              &:hover {
+                color: $hover-color;
+              }
+            }
+          }
 
           p {
             margin: auto;
@@ -652,10 +658,27 @@ $hover-color: #53800A;
 
       .links-container {
         display: flex;
+        align-items: center;
         font-size: 0.9em;
+        height: 100%;
 
         .links {
-          // align-self: center;
+          margin: 0;
+          transition: .3s ease; 
+
+          .router-link {
+            text-decoration: none;
+            color: $font-color;
+            transition: .3s ease; 
+
+            &:hover {
+              color: $hover-color;
+            }
+          }
+
+          &:hover {
+            color: $hover-color;
+          }
         }
       }
     }
@@ -685,7 +708,11 @@ $hover-color: #53800A;
         margin-bottom: 2%;
 
         .links {
-          margin-top: 2%;
+          // margin-top: 2%;
+
+          router-link {
+            // margin: 0;
+          }
         }
       }
     }

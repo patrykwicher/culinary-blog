@@ -48,13 +48,11 @@ export default createStore({
           tempVar.splice(dishType.length-2, 2)
           tempVar[5] = 'd';
           newDishTypeVar = tempVar.join('');
-          console.log(newDishTypeVar);
         }
         else if(dishType === 'Desserts' || dishType === 'Soups' || dishType === 'Salads'){
           tempVar = dishType.split('');
           tempVar.splice(dishType.length-1, 1);
           newDishTypeVar = tempVar.join('');
-          console.log(newDishTypeVar);
         }
         else {
           newDishTypeVar = dishType;
