@@ -5,17 +5,12 @@
   </div>
   <div class="container" v-else>
     <div class="posts-container" v-for="(post, index) in fetchAllPosts" :key="index">
-      <div class="informations-about" :style="{ display: 'none' }">
-        <p> {{ post.date }}</p>
-        <p> {{ post.userNickname }} </p>
-      </div>
       <div class="fetched-post">
         <div class="image-container" @click="showPost($event)">
           <img :src="post.imageUrl" alt="">
         </div>
         <p class="dish-type"> {{ post.dishType }} </p>
         <p class="title" @click="showPost($event)"> {{ post.postTitle }} </p>
-        <!-- <p class="post-content" v-if="post.postContent === fetchAllPosts[0].postContent"> {{ post.postContent.split(' ').slice(0, 32).join(" ") }}... </p> -->
       </div>
     </div>
   </div>
@@ -72,23 +67,10 @@ $description-color: #9E9E9E;
 
 .container {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    grid-gap: 30px;
     font-family: 'Work Sans', sans-serif;
-    margin: 0 12em;
     white-space: pre-wrap;
 
-    // :first-child {
-    //   grid-column: 1;
-    //   grid-row-start: 1;
-    //   grid-row-end: 3;
-    // }
-
     .posts-container {
-        box-sizing: border-box;
-        // box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-
         .informations-about {
             display: flex;
             justify-content: space-between;
@@ -99,9 +81,6 @@ $description-color: #9E9E9E;
         }
 
         .fetched-post {
-          width: 100%;
-          height: 80%;
-
             .title {
                 font-size: 1.5em;
                 margin: 0;
@@ -117,29 +96,20 @@ $description-color: #9E9E9E;
             }
 
             .image-container{
-              width: 100%;
-              height: 100%;
-
               img {
-                // box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-                width: 100%;
-                height: 100%;
                 object-fit: cover;
-                // overflow: hidden;
-                box-sizing: border-box;
+                transition: .3s ease;
 
                 &:hover {
                   cursor: pointer;
-                   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-
-                  // border: 2px dashed $hover-green-color;
+                   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
                 }
               }
             }
 
             .dish-type {
               color: $hover-green-color;
-              margin: 1% 0 0 0;
+              margin: 0.5rem 0 0 0;
             }
 
             .post-content {
@@ -158,16 +128,23 @@ $description-color: #9E9E9E;
 
   .container {
     grid-template-columns: 1fr 1fr;
-    column-gap: 2.5%;
-    margin: 5% 0 0 0;
+    column-gap: 3vw;
 
     .posts-container {
+      width: 100%;
+      height: 220px;
+      margin-top: 1rem;
+       
       .fetched-post {
+        height: 70%;
+        
         .image-container {
           width: 100%;
-          height: 80%;
+          height: 100%;
 
           img {
+            width: 100%;
+            height: 100%;
             border-radius: 5px;
           }
         }
@@ -192,17 +169,24 @@ $description-color: #9E9E9E;
 
   .container {
     grid-template-columns: 1fr 1fr;
-    column-gap: 3.5%;
+    column-gap: 3vw;
     margin: 4% 0 0 0;
 
     .posts-container {
+      width: 100%;
+      height: 240px;
+
       .fetched-post {
+        height: 80%;
+
         .image-container {
           width: 100%;
-          height: 80%;
+          height: 100%;
 
           img {
             border-radius: 5px;
+            width: 100%;
+            height: 100%;
           }
         }
 
@@ -231,9 +215,11 @@ $description-color: #9E9E9E;
   .container {
     margin: 1% 0 3% 0;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-gap: 1.5%;
+    grid-gap: 2vw;
 
     .posts-container {
+      height: 260px;
+
       .fetched-post {
         .title {
           font-weight: 400;
@@ -256,6 +242,16 @@ $description-color: #9E9E9E;
   }
 }
 
+@media (min-width: 1024px) {
+  .container {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+
+    .posts-container {
+      height: 280px;
+    }
+  }
+}
+
 @media (min-width: 1280px) {
   .header {
     margin-bottom: 1%;
@@ -267,16 +263,28 @@ $description-color: #9E9E9E;
 
   .container {
     margin: 0 6em 3% 6em;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    grid-column-gap: 30px;
-    grid-row-gap: 10px;
 
     .posts-container {
       .fetched-post {
         .title {
           font-size: 1.5em;
         }
+      }
+    }
+  }
+}
+
+@media (min-width: 1440px) {
+  .container {
+    margin-top: 1.5vw;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    column-gap: 1.5vw;
+
+    .posts-container {
+      height: 320px;
+      
+      .fetched-post {
+        height: 75%;
       }
     }
   }
@@ -293,6 +301,8 @@ $description-color: #9E9E9E;
 
   .container {
     .posts-container {
+      height: 450px;
+
       .fetched-post {
         .dish-type {
           font-size: 1.7em;
@@ -318,18 +328,24 @@ $description-color: #9E9E9E;
 
   .container {
     margin: 0 10%;
+    padding-bottom: 3%;
 
     .posts-container {
-      margin-bottom: 5%;
+      height: 800px;
 
       .fetched-post {
+        .image-container {
+          img {
+            border-radius: 20px;
+          }
+        }
+
         .dish-type {
-          font-size: 4.3em;
+          font-size: 3.5em;
         }
 
         .title {
           font-size: 4.9em;
-          // font-weight: 400;
         }
       }
     }

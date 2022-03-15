@@ -173,14 +173,14 @@ $hover-color: #53800A;
 @media (min-width: 768px) {
   .main-menu {
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-gap: 2%;
+    grid-gap: 2vw;
 
     .dish-card {
       .image {
-        height: 150px;
+        height: 160px;
 
         img {
-          height: 150px;
+          height: 100%;
         }
       }
 
